@@ -1,18 +1,17 @@
 "use client";
 
-import { ArrowLeft, ChevronRight } from "lucide-react";
-import Image from "next/image";
+import React from "react";
+import { ArrowLeft, ChevronRight, Camera } from "lucide-react";
 import Link from "next/link";
-
-import { useGetUserQuery } from "@/lib/slices/userApi";
-import { useEffect, useState } from "react";
+import { useGetUserQuery, useUpdateUserMutation } from "@/lib/slices/userApi";
+import { useEffect, useState, useRef } from "react";
 import { API_BASE_URL } from "@/config";
 
 export default function ProfilePage() {
-  const { data: user, isLoading } = useGetUserQuery();
-  // const [updateUser] = useUpdateUserMutation();
-  // const [updateProfilePicture] = useUpdateProfilePictureMutation();
-  // const [isEditing, setIsEditing] = useState(false);
+  const { data: user, isLoading: isUserLoading, refetch } = useGetUserQuery();
+  const [updateUser, { isLoading: isUpdating }] = useUpdateUserMutation();
+  const fileInputRef = useRef(null);
+  const [error, setError] = useState(null);
 
   const [formData, setFormData] = useState({
     first_name: "",
@@ -25,17 +24,71 @@ export default function ProfilePage() {
   });
 
   useEffect(() => {
-    setFormData({ ...formData, ...user });
+    if (user) {
+      setFormData((prevData) => ({ ...prevData, ...user }));
+      console.log("User data loaded:", user);
+    }
   }, [user]);
+
+  const handleImageClick = () => {
+    fileInputRef.current?.click();
+  };
+
+  const handleImageUpload = async (e) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    // Validate file type
+    const validTypes = ["image/jpeg", "image/png", "image/gif"];
+    if (!validTypes.includes(file.type)) {
+      setError("Please select a valid image file (JPEG, PNG, or GIF)");
+      return;
+    }
+
+    // Validate file size (max 5MB)
+    if (file.size > 5 * 1024 * 1024) {
+      setError("Image size should be less than 5MB");
+      return;
+    }
+
+    // Ensure we have a user ID
+    if (!user?.id) {
+      setError("User ID not available. Please try again.");
+      return;
+    }
+
+    try {
+      setError(null);
+      const formDataToSend = new FormData();
+      formDataToSend.append("profile_image", file);
+
+      // Pass both ID and FormData to the mutation
+      const result = await updateUser({ id: user.id, formData: formDataToSend }).unwrap();
+      console.log("Upload result:", result);
+
+      
+
+      // Update local state with new image URL
+      const newImageUrl = result.profile_image.startsWith('/')
+        ? result.profile_image
+        : `/${result.profile_image}`;
+      setFormData((prev) => ({
+        ...prev,
+        profile_image: newImageUrl,
+      }));
+
+      // Refetch user data to ensure consistency
+      await refetch();
+    } catch (err) {
+      console.error("Upload error details:");
+    }
+  };
 
   return (
     <div className="mx-auto max-w-6xl px-4 py-6 md:px-6 lg:px-8">
       {/* Header */}
       <div className="mb-6 flex items-center gap-4">
-        <Link
-          href="/"
-          className="rounded-lg p-2 hover:bg-gray-100 md:hidden"
-        >
+        <Link href="/" className="rounded-lg p-2 hover:bg-gray-100 md:hidden">
           <ArrowLeft className="h-6 w-6" />
         </Link>
         <h1 className="text-2xl font-bold">Profile</h1>
@@ -46,22 +99,54 @@ export default function ProfilePage() {
         <div className="col-span-2 space-y-6 lg:col-span-3">
           {/* Profile Header */}
           <div className="flex items-center gap-4">
-             <img
-              width={80}
-              height={80}
-              className="rounded-full bg-pink-100"
-              src={API_BASE_URL + formData.profile_image}
-              alt="Profile"
-            />
+            <div className="relative">
+              <div className="w-20 h-20 rounded-full overflow-hidden border border-black bg-pink-100">
+                <img
+                  className="w-full h-full object-cover"
+                  src={
+                    formData.profile_image
+                      ? `${API_BASE_URL}${formData.profile_image}`
+                      : "/default_profile.png"
+                  }
+                  alt="Profile"
+                  onError={(e) => {
+                    e.currentTarget.src = "/default_profile.png";
+                    console.log("Image load failed, using fallback");
+                  }}
+                />
+              </div>
+              <button
+                onClick={handleImageClick}
+                className="absolute bottom-0 right-0 p-1.5 bg-red-500 rounded-full hover:bg-red-600 transition-colors disabled:opacity-50"
+                disabled={isUpdating || isUserLoading}
+                aria-label="Update profile picture"
+              >
+                <Camera className="h-4 w-4 text-white" />
+              </button>
+              <input
+                ref={fileInputRef}
+                type="file"
+                className="hidden"
+                accept="image/png,image/jpeg,image/gif"
+                onChange={handleImageUpload}
+                disabled={isUpdating || isUserLoading}
+              />
+            </div>
 
             <div>
               <h2 className="text-xl font-semibold">{formData.first_name}</h2>
               <p className="text-gray-500">{formData.email}</p>
+              {error && <p className="text-sm text-red-500 mt-1">{error}</p>}
+              {isUpdating && (
+                <p className="text-sm text-blue-500 mt-1">
+                  Updating profile picture...
+                </p>
+              )}
             </div>
           </div>
 
-          {/* Profile Details */}
-          <div className="space-y-1 rounded-lg border bg-white">
+          {/* Profile Details - Unchanged */}
+          <div className="space-y-1 rounded-lg border">
             <Link
               href="/profile/gender"
               className="flex items-center justify-between border-b p-4"

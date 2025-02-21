@@ -32,27 +32,25 @@ export const userApi = createApi({
       providesTags: ["Product"],
     }),
 
-    // updateUser: builder.mutation({
-    //     query: (data) => ({
-    //         url: '/users/update',
-    //         method: 'PUT',
-    //         body: data
-    //     }),
-    //     invalidatesTags: ['User']
-    // }),
-    // updateProfilePicture: builder.mutation({
-    //     query: (file) => {
-    //         const formData = new FormData();
-    //         formData.append('file', file);
-    //         return {
-    //             url: '/users/upload',
-    //             method: 'POST',
-    //             body: formData,
-    //             formData: true,
-    //         };
-    //     },
-    //     invalidatesTags: ['User']
-    // })
+    // Updated to match your backend's PUT /users/:id endpoint
+    updateUser: builder.mutation({
+      query: ({ id, formData }) => ({
+        url: `/users/${id}`,
+        method: "PUT",
+        body: formData, // Sending FormData with the profile picture
+      }),
+      invalidatesTags: ["User"], // Refetch user data after update
+    }),
+
+    // Optional: Keep this if you need a separate endpoint for other updates
+    updateUserDetails: builder.mutation({
+      query: ({ id, ...updates }) => ({
+        url: `/users/${id}`,
+        method: "PUT",
+        body: updates,
+      }),
+      invalidatesTags: ["User"],
+    }),
   }),
 });
 
@@ -60,6 +58,6 @@ export const {
   useGetUserQuery,
   useGetProductsQuery,
   useGetOneProductQuery,
-  // useUpdateUserMutation,
-  // useUpdateProfilePictureMutation
+  useUpdateUserMutation,
+  useUpdateUserDetailsMutation,
 } = userApi;

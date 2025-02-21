@@ -251,34 +251,6 @@ export default function ProductDetail() {
           </TabsContent>
         </Tabs>
       </div>
-
-      {/* Best Seller Section */}
-      <div className="mt-12">
-        <h2 className="text-xl font-bold mb-6">BEST SELLER</h2>
-        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6">
-          <div className="group">
-            <div className="aspect-square relative rounded-lg overflow-hidden mb-2">
-              <img
-                src={images[0] || "/placeholder.svg"}
-                alt="Best Seller Product"
-                className="object-cover group-hover:scale-105 transition-transform"
-              />
-            </div>
-            <div className="flex items-center space-x-1">
-              {[...Array(5)].map((_, i) => (
-                <Star
-                  key={i}
-                  className="h-4 w-4 text-yellow-400 fill-current"
-                />
-              ))}
-            </div>
-            <div className="mt-1">
-              <span className="text-red-500">$499</span>
-              <span className="text-gray-500 line-through ml-2">$599</span>
-            </div>
-          </div>
-        </div>
-      </div>
     </div>
   );
 }

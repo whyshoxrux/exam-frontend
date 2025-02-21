@@ -32,7 +32,6 @@ const PRODUCTS_PER_PAGE = 9;
 
 export default function ProductsPage() {
   const [priceRange, setPriceRange] = useState([3.99, 25.99]);
-  const [selectedBrand, setSelectedBrand] = useState("");
   const [selectedColor, setSelectedColor] = useState("");
   const [viewMode, setViewMode] = useState("grid");
   const [currentPage, setCurrentPage] = useState(1);

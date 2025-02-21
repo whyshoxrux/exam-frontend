@@ -12,7 +12,7 @@ import {
   ShoppingBag,
   Contact,
   LogOut,
-  LogIn
+  LogIn,
 } from "lucide-react";
 import {
   Select,
@@ -49,41 +49,44 @@ const Navbar = () => {
         {/* Top Bar */}
         <div className="border-b">
           <div className="container mx-auto flex h-16 items-center justify-between px-4">
-            <div className="flex items-center">
-              <Select defaultValue="en">
-                <SelectTrigger className="w-[70px] border-none shadow-none">
-                  <SelectValue placeholder="EN" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectGroup>
-                    <SelectItem value="en">EN</SelectItem>
-                    <SelectItem value="ru">RU</SelectItem>
-                    <SelectItem value="uz">UZ</SelectItem>
-                  </SelectGroup>
-                </SelectContent>
-              </Select>
-              <Select defaultValue="usd">
-                <SelectTrigger className="w-[70px] border-none shadow-none">
-                  <SelectValue placeholder="USD" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectGroup>
-                    <SelectItem value="usd">USD</SelectItem>
-                    <SelectItem value="eur">EUR</SelectItem>
-                    <SelectItem value="gbp">GBP</SelectItem>
-                  </SelectGroup>
-                </SelectContent>
-              </Select>
+            <div className="flex justify-between gap-5">
+              <div className="flex items-center">
+                <Select defaultValue="en">
+                  <SelectTrigger className="w-[70px] border-none shadow-none">
+                    <SelectValue placeholder="EN" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectGroup>
+                      <SelectItem value="en">EN</SelectItem>
+                      <SelectItem value="ru">RU</SelectItem>
+                      <SelectItem value="uz">UZ</SelectItem>
+                    </SelectGroup>
+                  </SelectContent>
+                </Select>
+                <Select defaultValue="usd">
+                  <SelectTrigger className="w-[70px] border-none shadow-none">
+                    <SelectValue placeholder="USD" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectGroup>
+                      <SelectItem value="usd">USD</SelectItem>
+                      <SelectItem value="eur">EUR</SelectItem>
+                      <SelectItem value="gbp">GBP</SelectItem>
+                    </SelectGroup>
+                  </SelectContent>
+                </Select>
+              </div>
+              <Link href="/" className="flex items-center gap-2 ">
+                <Image
+                  src="/icon.svg"
+                  alt="E-Comm Logo"
+                  width={134}
+                  height={44}
+                  className="rounded-full"
+                />
+              </Link>
             </div>
-            <Link href="/" className="flex items-center gap-2">
-              <Image
-                src="/icon.svg"
-                alt="E-Comm Logo"
-                width={134}
-                height={44}
-                className="rounded-full"
-              />
-            </Link>
+
             <div className="flex md:hidden items-center space-x-4">
               <button className="text-gray-600 hover:text-gray-900">
                 <Search className="h-5 w-5" />
@@ -102,6 +105,12 @@ const Navbar = () => {
             </div>
             <div className="hidden md:flex items-center space-x-4 gap-7">
               <div className="flex gap-5">
+              <Link
+                  href="/"
+                  className="flex items-center space-x-1 text-sm font-medium hover:underline"
+                >
+                  <span>Home</span>
+                </Link>
                 <Link
                   href="/contact"
                   className="flex items-center space-x-1 text-sm font-medium hover:underline"
@@ -204,12 +213,6 @@ const Navbar = () => {
                 CONTACT
               </Link>
             </nav>
-            <div className="flex flex-col items-center gap-6 mt-10">
-              <div className="flex items-center space-x-2 text-gray-600">
-                <ShoppingCart className="h-6 w-6" />
-                <span className="text-lg">Cart (3 items)</span>
-              </div>
-            </div>
           </div>
         </div>
       )}
@@ -228,11 +231,12 @@ const Navbar = () => {
           </li>
           <li>
             <Link
-              href="/bags"
-              className="flex flex-col items-center text-gray-600 hover:text-blue-500"
+              href="/cart"
+              className="flex flex-col items-center text-gray-600
+              hover:text-blue-500"
             >
-              <ShoppingBag className="h-6 w-6" />
-              <span className="text-xs mt-1">Bags</span>
+              <ShoppingCart className="h-6 w-6" />
+              <span className="text-xs mt-1">Cart</span>
             </Link>
           </li>
           <li>
