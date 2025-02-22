@@ -63,13 +63,14 @@ export default function ProfilePage() {
       formDataToSend.append("profile_image", file);
 
       // Pass both ID and FormData to the mutation
-      const result = await updateUser({ id: user.id, formData: formDataToSend }).unwrap();
+      const result = await updateUser({
+        id: user.id,
+        formData: formDataToSend,
+      }).unwrap();
       console.log("Upload result:", result);
 
-      
-
       // Update local state with new image URL
-      const newImageUrl = result.profile_image.startsWith('/')
+      const newImageUrl = result.profile_image.startsWith("/")
         ? result.profile_image
         : `/${result.profile_image}`;
       setFormData((prev) => ({
@@ -103,11 +104,7 @@ export default function ProfilePage() {
               <div className="w-20 h-20 rounded-full overflow-hidden border border-black bg-pink-100">
                 <img
                   className="w-full h-full object-cover"
-                  src={
-                    formData.profile_image
-                      ? `${API_BASE_URL}${formData.profile_image}`
-                      : "/default_profile.png"
-                  }
+                  src={`${API_BASE_URL}${formData.profile_image}`}
                   alt="Profile"
                   onError={(e) => {
                     e.currentTarget.src = "/default_profile.png";

@@ -31,7 +31,16 @@ export default function Cart() {
   const [removeCartItem] = useRemoveCartItemMutation();
 
   if (isLoading) {
-    return <div className="py-12 text-center">Loading cart items...</div>;
+    return (
+      <div className="py-12 flex justify-center items-center">
+        <div className="flex space-x-2">
+          <div className="w-3 h-3 bg-blue-500 rounded-full animate-pulse animation-delay-0"></div>
+          <div className="w-3 h-3 bg-blue-500 rounded-full animate-pulse animation-delay-200"></div>
+          <div className="w-3 h-3 bg-blue-500 rounded-full animate-pulse animation-delay-400"></div>
+        </div>
+        <span className="ml-4 text-gray-600">Loading products...</span>
+      </div>
+    );
   }
 
   if (error) {
@@ -120,7 +129,7 @@ export default function Cart() {
           <div className="mb-4 hidden grid-cols-12 gap-4 text-sm font-semibold text-gray-600 lg:grid">
             <div className="col-span-6">PRODUCT</div>
             <div className="col-span-2">PRICE</div>
-            <div className="col-span-2">QTY</div>
+            <div className="col-span-2">QUANTITY</div>
             <div className="col-span-2">UNIT PRICE</div>
           </div>
 
@@ -251,7 +260,6 @@ export default function Cart() {
                 onClick={() => setShowPaymentModal(false)}
                 className="text-gray-400 hover:text-gray-600"
               >
-                <X className="h-5 w-5" />
               </button>
             </div>
           </DialogHeader>
@@ -320,7 +328,6 @@ export default function Cart() {
                 onClick={() => setShowCardModal(false)}
                 className="text-gray-400 hover:text-gray-600"
               >
-                <X className="h-5 w-5" />
               </button>
             </div>
           </DialogHeader>

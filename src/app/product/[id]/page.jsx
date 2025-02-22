@@ -35,12 +35,28 @@ export default function ProductDetail() {
   };
 
   if (isLoading) {
-    return <div className="py-12 text-center">Loading product details...</div>;
+    return (
+      <div className="py-12 flex justify-center items-center">
+        <div className="flex space-x-2">
+          <div className="w-3 h-3 bg-blue-500 rounded-full animate-pulse animation-delay-0"></div>
+          <div className="w-3 h-3 bg-blue-500 rounded-full animate-pulse animation-delay-200"></div>
+          <div className="w-3 h-3 bg-blue-500 rounded-full animate-pulse animation-delay-400"></div>
+        </div>
+        <span className="ml-4 text-gray-600">Loading products...</span>
+      </div>
+    );
   }
 
-  if (error) {
+  if (isLoading) {
     return (
-      <div className="py-12 text-center">Error loading product details</div>
+      <div className="py-12 flex justify-center items-center">
+        <div className="flex space-x-2">
+          <div className="w-3 h-3 bg-blue-500 rounded-full animate-pulse animation-delay-0"></div>
+          <div className="w-3 h-3 bg-blue-500 rounded-full animate-pulse animation-delay-200"></div>
+          <div className="w-3 h-3 bg-blue-500 rounded-full animate-pulse animation-delay-400"></div>
+        </div>
+        <span className="ml-4 text-gray-600">Loading products...</span>
+      </div>
     );
   }
 
@@ -88,22 +104,6 @@ export default function ProductDetail() {
           <div>
             <h1 className="text-2xl font-bold mb-2">{product.product_name}</h1>
             <div className="flex items-center space-x-2">
-              {[...Array(5)].map((_, i) => (
-                <Star
-                  key={i}
-                  className={`h-5 w-5 ${
-                    i < (product.rating || 0)
-                      ? "text-yellow-400 fill-current"
-                      : "text-gray-300"
-                  }`}
-                />
-              ))}
-              <span className="text-sm text-gray-500">
-                ({product.reviews_count || 0} reviews)
-              </span>
-              <button className="text-blue-500 text-sm hover:underline">
-                Submit a review
-              </button>
             </div>
           </div>
 
@@ -195,9 +195,6 @@ export default function ProductDetail() {
               </div>
               <Button className="bg-blue-500 hover:bg-blue-600">
                 Add To Cart
-              </Button>
-              <Button variant="outline" size="icon">
-                <Heart className="h-4 w-4" />
               </Button>
             </div>
 

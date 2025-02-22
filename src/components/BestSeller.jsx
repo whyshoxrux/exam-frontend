@@ -141,9 +141,6 @@ export default function BestSellerPage() {
                 />
                 {hoveredProduct === product.id && (
                   <div className="absolute right-2 top-2 flex flex-col gap-2">
-                    <button className="p-2 bg-white rounded-full shadow-lg hover:bg-gray-50 transition-colors">
-                      <Heart className="w-5 h-5 text-blue-500" />
-                    </button>
                     <Link href="/cart">
                       <button className="p-2 bg-white rounded-full shadow-lg hover:bg-gray-50 transition-colors">
                         <ShoppingCart className="w-5 h-5 text-blue-500" />

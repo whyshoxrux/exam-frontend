@@ -50,32 +50,6 @@ const Navbar = () => {
         <div className="border-b">
           <div className="container mx-auto flex h-16 items-center justify-between px-4">
             <div className="flex justify-between gap-5">
-              <div className="flex items-center">
-                <Select defaultValue="en">
-                  <SelectTrigger className="w-[70px] border-none shadow-none">
-                    <SelectValue placeholder="EN" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectGroup>
-                      <SelectItem value="en">EN</SelectItem>
-                      <SelectItem value="ru">RU</SelectItem>
-                      <SelectItem value="uz">UZ</SelectItem>
-                    </SelectGroup>
-                  </SelectContent>
-                </Select>
-                <Select defaultValue="usd">
-                  <SelectTrigger className="w-[70px] border-none shadow-none">
-                    <SelectValue placeholder="USD" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectGroup>
-                      <SelectItem value="usd">USD</SelectItem>
-                      <SelectItem value="eur">EUR</SelectItem>
-                      <SelectItem value="gbp">GBP</SelectItem>
-                    </SelectGroup>
-                  </SelectContent>
-                </Select>
-              </div>
               <Link href="/" className="flex items-center gap-2 ">
                 <Image
                   src="/icon.svg"
@@ -105,7 +79,7 @@ const Navbar = () => {
             </div>
             <div className="hidden md:flex items-center space-x-4 gap-7">
               <div className="flex gap-5">
-              <Link
+                <Link
                   href="/"
                   className="flex items-center space-x-1 text-sm font-medium hover:underline"
                 >
@@ -135,6 +109,17 @@ const Navbar = () => {
                       <LogOut className="h-5 w-5" />
                       <span>Log Out</span>
                     </button>
+
+                    <div className="flex items-center space-x-2">
+                      <div className="relative ">
+                        <Link href="/cart" className="flex gap-2">
+                          <ShoppingCart className="h-5 w-5" />
+                        </Link>
+                        <span className="absolute -right-2 -top-2 flex h-4 w-4 items-center justify-center rounded-full bg-red-500 text-[10px] text-white">
+                          3
+                        </span>
+                      </div>
+                    </div>
                   </div>
                 ) : (
                   <Link
@@ -147,16 +132,6 @@ const Navbar = () => {
                 )}
               </div>
 
-              <div className="flex items-center space-x-2">
-                <div className="relative ">
-                  <Link href="/cart" className="flex gap-2">
-                    <ShoppingCart className="h-5 w-5" />
-                  </Link>
-                  <span className="absolute -right-2 -top-2 flex h-4 w-4 items-center justify-center rounded-full bg-red-500 text-[10px] text-white">
-                    3
-                  </span>
-                </div>
-              </div>
               <button className="text-gray-600 hover:text-gray-900">
                 <Search className="h-5 w-5" />
                 <span className="sr-only">Search</span>

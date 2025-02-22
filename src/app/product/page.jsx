@@ -48,9 +48,17 @@ export default function ProductsPage() {
   const totalPages = Math.ceil(products.length / PRODUCTS_PER_PAGE);
 
   if (isLoading) {
-    return <div className="py-12 text-center">Loading products...</div>;
+    return (
+      <div className="py-12 flex justify-center items-center">
+        <div className="flex space-x-2">
+          <div className="w-3 h-3 bg-blue-500 rounded-full animate-pulse animation-delay-0"></div>
+          <div className="w-3 h-3 bg-blue-500 rounded-full animate-pulse animation-delay-200"></div>
+          <div className="w-3 h-3 bg-blue-500 rounded-full animate-pulse animation-delay-400"></div>
+        </div>
+        <span className="ml-4 text-gray-600">Loading products...</span>
+      </div>
+    );
   }
-
   if (error) {
     return (
       <div className="py-12 text-center">
