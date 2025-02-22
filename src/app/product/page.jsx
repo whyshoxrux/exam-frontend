@@ -16,7 +16,7 @@ import {
 import {
   useGetProductsQuery,
   useGetOneProductQuery,
-} from "@/lib/slices/userApi";
+} from "@/lib/service/userApi";
 
 const brands = [
   { name: "Nike", count: 48 },

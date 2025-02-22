@@ -12,7 +12,7 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel";
-import { useGetProductsQuery } from "@/lib/slices/userApi";
+import { useGetProductsQuery } from "@/lib/service/userApi";
 import { useGetCategoryQuery } from "@/lib/service/category.api";
 
 const PRODUCTS_PER_PAGE = 8;

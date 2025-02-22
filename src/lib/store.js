@@ -1,7 +1,7 @@
 import { configureStore } from "@reduxjs/toolkit";
 import authSlice from "./slices/authlice";
 import api from "./service/api";
-import { userApi } from "./slices/userApi";
+import { userApi } from "./service/userApi";
 import { cartApi } from "./service/cart-itemApi";
 import { categoryApi } from "./service/category.api";
 

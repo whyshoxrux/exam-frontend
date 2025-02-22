@@ -15,7 +15,7 @@ export const userApi = createApi({
       return headers;
     },
   }),
-  tagTypes: ["User", "Product"],
+  tagTypes: ["User", "Product", "Reviews"],
   endpoints: (builder) => ({
     getUser: builder.query({
       query: () => "/users/me",
@@ -32,17 +32,24 @@ export const userApi = createApi({
       providesTags: ["Product"],
     }),
 
-    // Updated to match your backend's PUT /users/:id endpoint
+    deleteOneProduct: builder.mutation({
+      query: ({ id, formData }) => ({
+        url: `/products/${id}`,
+        method: "DELETE",
+        body: formData,
+      }),
+      invalidatesTags: ["Product"],
+    }),
+
     updateUser: builder.mutation({
       query: ({ id, formData }) => ({
         url: `/users/${id}`,
         method: "PUT",
-        body: formData, // Sending FormData with the profile picture
+        body: formData,
       }),
-      invalidatesTags: ["User"], // Refetch user data after update
+      invalidatesTags: ["User"],
     }),
 
-    // Optional: Keep this if you need a separate endpoint for other updates
     updateUserDetails: builder.mutation({
       query: ({ id, ...updates }) => ({
         url: `/users/${id}`,
@@ -50,6 +57,14 @@ export const userApi = createApi({
         body: updates,
       }),
       invalidatesTags: ["User"],
+    }),
+
+    addReview: builder.mutation({
+      query: ({ product_id, rating, comment }) => ({
+        url: `/reviews`,
+        method: "POST",
+        body: { product_id, rating, comment },
+      }),
     }),
   }),
 });
@@ -60,4 +75,6 @@ export const {
   useGetOneProductQuery,
   useUpdateUserMutation,
   useUpdateUserDetailsMutation,
+  useDeleteOneProductMutation,
+  useAddReviewMutation,
 } = userApi;

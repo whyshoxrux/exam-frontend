@@ -3,7 +3,7 @@
 import React from "react";
 import { ArrowLeft, ChevronRight, Camera } from "lucide-react";
 import Link from "next/link";
-import { useGetUserQuery, useUpdateUserMutation } from "@/lib/slices/userApi";
+import { useGetUserQuery, useUpdateUserMutation } from "@/lib/service/userApi";
 import { useEffect, useState, useRef } from "react";
 import { API_BASE_URL } from "@/config";
 
