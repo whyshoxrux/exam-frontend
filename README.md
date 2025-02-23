@@ -7,3 +7,5 @@ JWT orqali authentication ✅
 
 Qo'shimcha: Backend: 3000 port, Frontend: 3001 port, Dashboard: 3002 port da ishlatish maqsadga muvofiq bo'ladi.
 Responsiv hammasi joyida
+
+Backendni serverga qo'yaman deb 2 soat harakat qildim xato beri shuning uchun localhostda tekshirib qoyavering🥲
