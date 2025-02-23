@@ -23,4 +23,4 @@ const api = createApi({
 });
 
 export const { useRegisterUserMutation, useLoginUserMutation } = api;
-export default api; // ✅ api ni default export qilish kerak
+export default api; 
